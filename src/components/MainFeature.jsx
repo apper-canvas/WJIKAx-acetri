@@ -62,7 +62,7 @@ const Card = ({ card, isRevealed = false, isPlayerCard = false }) => {
       className="relative w-24 h-36 perspective-1000"
       style={{ 
         transformStyle: 'preserve-3d',
-        zIndex: isPlayerCard ? 10 : 5
+        zIndex: isPlayerCard ? 20 : 10
       }}
     >
       <div 
@@ -322,16 +322,16 @@ const MainFeature = ({ gameMode }) => {
         <div className="relative">
           <div className="game-table mb-8">
             {/* Opponent */}
-            <div className="absolute top-6 left-1/2 transform -translate-x-1/2 text-center z-10">
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center z-10">
               <div className="flex justify-center mb-2">
                 <div className="w-12 h-12 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center">
                   <User size={20} className="text-surface-500 dark:text-surface-400" />
                 </div>
               </div>
               <div className="text-sm font-medium">Opponent</div>
-              <div className="text-sm text-surface-500 dark:text-surface-400 mb-4">₹{opponentChips}</div>
+              <div className="text-sm text-surface-500 dark:text-surface-400 mb-1">₹{opponentChips}</div>
               
-              <div className="mt-4 flex justify-center space-x-2">
+              <div className="mt-2 flex justify-center space-x-2">
                 {opponentCards.map((card, index) => (
                   <Card 
                     key={index} 
@@ -343,7 +343,7 @@ const MainFeature = ({ gameMode }) => {
             </div>
             
             {/* Pot */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-20">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-30">
               <motion.div 
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
@@ -381,8 +381,8 @@ const MainFeature = ({ gameMode }) => {
             </div>
             
             {/* Player */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center z-10">
-              <div className="mb-8 flex justify-center space-x-2">
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center z-20">
+              <div className="mb-4 flex justify-center space-x-2">
                 {playerCards.map((card, index) => (
                   <Card 
                     key={index} 
@@ -393,10 +393,10 @@ const MainFeature = ({ gameMode }) => {
                 ))}
               </div>
               
-              <div className="mt-4 text-sm font-medium">You</div>
+              <div className="mt-2 text-sm font-medium">You</div>
               <div className="text-sm text-surface-500 dark:text-surface-400">₹{playerChips}</div>
               
-              <div className="flex justify-center mt-2">
+              <div className="flex justify-center mt-1">
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                   <User size={20} className="text-primary" />
                 </div>
