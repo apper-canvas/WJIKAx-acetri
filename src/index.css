@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .card-face {
+    @apply relative w-full h-full rounded-xl bg-white shadow-card transform transition-transform duration-500 ease-in-out;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+  
+  .card-back {
+    @apply absolute inset-0 rounded-xl bg-gradient-to-br from-secondary to-primary-dark;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-primary to-primary-dark text-white font-medium rounded-xl 
+    shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 
+    focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-gradient-to-r from-secondary to-secondary-dark text-white font-medium rounded-xl 
+    shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 
+    focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50;
+  }
+  
+  .game-table {
+    @apply relative w-full h-[500px] rounded-[50%] bg-gradient-to-br from-primary-dark/20 to-primary/10 
+    border-8 border-primary-dark/30 shadow-inner overflow-hidden;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
