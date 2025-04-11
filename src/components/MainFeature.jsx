@@ -342,8 +342,8 @@ const MainFeature = ({ gameMode }) => {
             </div>
             
             {/* Opponent */}
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center z-10">
-              <div className="flex justify-center mb-2">
+            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-center">
+              <div className="flex justify-center mb-1">
                 <div className="w-12 h-12 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center shadow-md">
                   <User size={20} className="text-surface-500 dark:text-surface-400" />
                 </div>
@@ -351,14 +351,17 @@ const MainFeature = ({ gameMode }) => {
               <div className="text-sm font-medium text-white shadow-text">Opponent</div>
               <div className="text-sm text-white/80 mb-1 shadow-text">₹{opponentChips}</div>
               
-              <div className="mt-4 flex justify-center space-x-3">
-                {opponentCards.map((card, index) => (
-                  <Card 
-                    key={index} 
-                    card={card} 
-                    isRevealed={gameState === 'showdown' || winner !== null}
-                  />
-                ))}
+              {/* Opponent cards container with fixed height */}
+              <div className="h-48 flex items-start justify-center">
+                <div className="mt-2 flex justify-center space-x-3">
+                  {opponentCards.map((card, index) => (
+                    <Card 
+                      key={index} 
+                      card={card} 
+                      isRevealed={gameState === 'showdown' || winner !== null}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
             
@@ -401,19 +404,22 @@ const MainFeature = ({ gameMode }) => {
             </div>
             
             {/* Player */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center z-20">
-              <div className="mb-4 flex justify-center space-x-3">
-                {playerCards.map((card, index) => (
-                  <Card 
-                    key={index} 
-                    card={card} 
-                    isRevealed={!isBlind || gameState === 'showdown' || winner !== null}
-                    isPlayerCard={true}
-                  />
-                ))}
+            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center">
+              {/* Player cards container with fixed height */}
+              <div className="h-48 flex items-end justify-center">
+                <div className="mb-2 flex justify-center space-x-3">
+                  {playerCards.map((card, index) => (
+                    <Card 
+                      key={index} 
+                      card={card} 
+                      isRevealed={!isBlind || gameState === 'showdown' || winner !== null}
+                      isPlayerCard={true}
+                    />
+                  ))}
+                </div>
               </div>
               
-              <div className="mt-2 text-sm font-medium text-white shadow-text">You</div>
+              <div className="mt-1 text-sm font-medium text-white shadow-text">You</div>
               <div className="text-sm text-white/80 shadow-text">₹{playerChips}</div>
               
               <div className="flex justify-center mt-1">
