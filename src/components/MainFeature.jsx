@@ -10,7 +10,8 @@ import {
   Check, 
   X, 
   RefreshCw,
-  Award
+  Award,
+  Bot
 } from 'lucide-react'
 
 // Card suits and values
