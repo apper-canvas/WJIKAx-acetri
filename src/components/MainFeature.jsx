@@ -38,7 +38,7 @@ const generateDeck = () => {
 
 // Get card color based on suit
 const getCardColor = (suit) => {
-  return suit === 'hearts' || suit === 'diamonds' ? 'text-red-500' : 'text-black dark:text-white'
+  return suit === 'hearts' || suit === 'diamonds' ? 'text-red-600' : 'text-gray-900 dark:text-gray-100'
 }
 
 // Get suit symbol
@@ -66,7 +66,7 @@ const Card = ({ card, isRevealed = false, isPlayerCard = false }) => {
       }}
     >
       <div 
-        className={`absolute inset-0 bg-white border-2 border-gray-200 rounded-lg shadow-md ${getCardColor(card.suit)}`}
+        className={`absolute inset-0 bg-white border-2 border-gray-200 rounded-lg shadow-lg ${getCardColor(card.suit)}`}
         style={{ 
           transform: 'rotateY(0deg)',
           backfaceVisibility: 'hidden',
@@ -75,21 +75,21 @@ const Card = ({ card, isRevealed = false, isPlayerCard = false }) => {
       >
         <div className="absolute inset-0 flex flex-col justify-between p-2">
           <div className="flex justify-between items-center">
-            <div className="font-bold">{card.value}</div>
-            <div className="text-lg">{getSuitSymbol(card.suit)}</div>
+            <div className="font-bold text-lg">{card.value}</div>
+            <div className="text-xl font-bold">{getSuitSymbol(card.suit)}</div>
           </div>
-          <div className="flex justify-center items-center text-3xl font-bold">
+          <div className="flex justify-center items-center text-4xl font-bold">
             {getSuitSymbol(card.suit)}
           </div>
           <div className="flex justify-between items-center rotate-180">
-            <div className="font-bold">{card.value}</div>
-            <div className="text-lg">{getSuitSymbol(card.suit)}</div>
+            <div className="font-bold text-lg">{card.value}</div>
+            <div className="text-xl font-bold">{getSuitSymbol(card.suit)}</div>
           </div>
         </div>
       </div>
       
       <div 
-        className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 border-2 border-gray-200 rounded-lg shadow-md"
+        className="absolute inset-0 bg-gradient-to-br from-blue-700 to-blue-900 border-2 border-gray-200 rounded-lg shadow-lg"
         style={{ 
           transform: 'rotateY(180deg)',
           backfaceVisibility: 'hidden',
@@ -102,7 +102,7 @@ const Card = ({ card, isRevealed = false, isPlayerCard = false }) => {
           </div>
         </div>
         <div className="absolute inset-0 pointer-events-none">
-          <div className="h-full w-full opacity-10">
+          <div className="h-full w-full opacity-20">
             <div className="grid grid-cols-5 grid-rows-7 h-full">
               {[...Array(35)].map((_, i) => (
                 <div key={i} className="border border-white/20" />
@@ -261,15 +261,15 @@ const MainFeature = ({ gameMode }) => {
     <div className="relative">
       <div className="mb-6 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center shadow-md">
             {gameMode === 'singleplayer' ? (
-              <Bot size={20} className="text-primary" />
+              <Bot size={22} className="text-primary" />
             ) : (
-              <Users size={20} className="text-secondary" />
+              <Users size={22} className="text-secondary" />
             )}
           </div>
           <div>
-            <h3 className="font-medium">
+            <h3 className="text-lg font-semibold">
               {gameMode === 'singleplayer' ? 'Single Player' : 'Multiplayer'} Game
             </h3>
             <p className="text-sm text-surface-500 dark:text-surface-400">
@@ -283,9 +283,9 @@ const MainFeature = ({ gameMode }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={startNewGame}
-            className="px-4 py-2 bg-primary rounded-lg text-white flex items-center"
+            className="px-5 py-2.5 bg-gradient-to-r from-primary to-primary-dark text-white font-medium rounded-lg shadow-md hover:shadow-lg flex items-center"
           >
-            <RefreshCw size={16} className="mr-2" />
+            <RefreshCw size={18} className="mr-2" />
             New Game
           </motion.button>
         )}
@@ -293,35 +293,35 @@ const MainFeature = ({ gameMode }) => {
       
       {/* Game setup */}
       {gameState === 'betting' && playerCards.length === 0 && (
-        <div className="bg-surface-100 dark:bg-surface-800 rounded-xl p-6 mb-8">
+        <div className="bg-surface-100 dark:bg-surface-800 rounded-xl p-6 mb-8 shadow-lg border border-surface-200 dark:border-surface-700">
           <h3 className="text-xl font-semibold mb-4">Game Setup</h3>
           
-          <div className="mb-4">
+          <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Boot Amount</label>
             <div className="flex items-center">
               <button 
                 onClick={() => handleBootAmountChange(bootAmount - 10)}
                 disabled={bootAmount <= 10}
-                className="p-2 rounded-lg bg-surface-200 dark:bg-surface-700 disabled:opacity-50"
+                className="p-2 rounded-lg bg-surface-200 dark:bg-surface-700 hover:bg-surface-300 dark:hover:bg-surface-600 disabled:opacity-50 shadow transition-colors"
               >
-                <Minus size={16} />
+                <Minus size={18} />
               </button>
-              <div className="mx-4 font-medium">₹{bootAmount}</div>
+              <div className="mx-6 font-medium text-lg">₹{bootAmount}</div>
               <button 
                 onClick={() => handleBootAmountChange(bootAmount + 10)}
                 disabled={bootAmount >= 100}
-                className="p-2 rounded-lg bg-surface-200 dark:bg-surface-700 disabled:opacity-50"
+                className="p-2 rounded-lg bg-surface-200 dark:bg-surface-700 hover:bg-surface-300 dark:hover:bg-surface-600 disabled:opacity-50 shadow transition-colors"
               >
-                <Plus size={16} />
+                <Plus size={18} />
               </button>
             </div>
           </div>
           
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={startNewGame}
-            className="px-4 py-2 bg-primary text-white rounded-lg w-full"
+            className="btn-primary w-full text-center py-3"
           >
             Start Game
           </motion.button>
@@ -331,41 +331,59 @@ const MainFeature = ({ gameMode }) => {
       {/* Game table */}
       {playerCards.length > 0 && (
         <div className="relative">
-          <div className="w-full h-96 bg-gradient-to-b from-green-800 to-green-900 rounded-xl mb-8 relative overflow-hidden shadow-xl">
-            {/* Table pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="grid grid-cols-12 grid-rows-8 h-full">
-                {[...Array(96)].map((_, i) => (
-                  <div key={i} className="border border-white/10" />
-                ))}
-              </div>
-            </div>
+          {/* Improved poker table design */}
+          <div className="game-table w-full h-[450px] mb-8 flex items-center justify-center relative overflow-hidden">
+            {/* Table edge highlight */}
+            <div className="absolute inset-0 rounded-[50%] border-[12px] border-primary-dark/20 pointer-events-none"></div>
             
-            {/* Opponent */}
-            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-center">
-              <div className="flex justify-center mb-1">
-                <div className="w-12 h-12 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center shadow-md">
-                  <User size={20} className="text-surface-500 dark:text-surface-400" />
-                </div>
-              </div>
-              <div className="text-sm font-medium text-white shadow-text">Opponent</div>
-              <div className="text-sm text-white/80 mb-1 shadow-text">₹{opponentChips}</div>
-              
-              {/* Opponent cards container with fixed height */}
-              <div className="h-48 flex items-start justify-center">
-                <div className="mt-2 flex justify-center space-x-3">
-                  {opponentCards.map((card, index) => (
-                    <Card 
-                      key={index} 
-                      card={card} 
-                      isRevealed={gameState === 'showdown' || winner !== null}
-                    />
+            {/* Table felt texture */}
+            <div className="absolute inset-[12px] rounded-[48%] bg-gradient-to-b from-green-700 to-green-900 shadow-inner">
+              {/* Felt pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="grid grid-cols-24 grid-rows-12 h-full">
+                  {[...Array(288)].map((_, i) => (
+                    <div key={i} className="border border-white/5" />
                   ))}
                 </div>
               </div>
             </div>
             
-            {/* Pot */}
+            {/* Table inner highlight */}
+            <div className="absolute inset-[20px] rounded-[46%] border border-white/5 pointer-events-none"></div>
+            
+            {/* Opponent area */}
+            <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 text-center w-full">
+              <div className="flex justify-center mb-2">
+                <div className="w-14 h-14 rounded-full bg-surface-700 border-2 border-surface-600 flex items-center justify-center shadow-lg">
+                  <User size={24} className="text-surface-300" />
+                </div>
+              </div>
+              <div className="text-white font-semibold text-shadow mb-1">Opponent</div>
+              <div className="bg-black/40 backdrop-blur-sm text-white font-medium px-4 py-1 rounded-full inline-block mb-4 shadow-md">
+                ₹{opponentChips}
+              </div>
+              
+              {/* Opponent cards container */}
+              <div className="h-40 flex items-start justify-center">
+                <div className="flex justify-center gap-3">
+                  {opponentCards.map((card, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ y: -20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.1, duration: 0.3 }}
+                    >
+                      <Card 
+                        card={card} 
+                        isRevealed={gameState === 'showdown' || winner !== null}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {/* Pot area */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-30">
               <motion.div 
                 initial={{ scale: 0.9 }}
@@ -375,7 +393,7 @@ const MainFeature = ({ gameMode }) => {
                   repeatType: "reverse", 
                   duration: 1.5 
                 }}
-                className="text-2xl font-bold mb-2 text-white shadow-text bg-black/30 px-6 py-2 rounded-full"
+                className="text-2xl font-bold mb-2 text-white text-shadow-lg bg-black/40 backdrop-blur-sm px-8 py-3 rounded-full shadow-lg border border-white/10"
               >
                 Pot: ₹{pot}
               </motion.div>
@@ -384,7 +402,7 @@ const MainFeature = ({ gameMode }) => {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-black/60 text-white px-4 py-2 rounded-lg text-sm mt-2 backdrop-blur-sm shadow-lg"
+                  className="bg-black/70 text-white px-5 py-2.5 rounded-lg font-medium mt-4 backdrop-blur-sm shadow-lg max-w-xs mx-auto"
                 >
                   {message}
                 </motion.div>
@@ -395,110 +413,119 @@ const MainFeature = ({ gameMode }) => {
                   initial={{ scale: 0, rotate: -10 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                  className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-accent text-white px-6 py-3 rounded-xl flex items-center shadow-lg"
+                  className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent to-accent/80 text-white px-6 py-3 rounded-xl flex items-center shadow-xl font-bold"
                 >
-                  <Award size={20} className="mr-2" />
+                  <Award size={24} className="mr-2" />
                   {winner === 'player' ? 'You Win!' : 'Opponent Wins!'}
                 </motion.div>
               )}
             </div>
             
-            {/* Player */}
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center">
-              {/* Player cards container with fixed height */}
-              <div className="h-48 flex items-end justify-center">
-                <div className="mb-2 flex justify-center space-x-3">
+            {/* Player area */}
+            <div className="absolute bottom-[10%] left-1/2 transform -translate-x-1/2 text-center w-full">
+              {/* Player cards container */}
+              <div className="h-40 flex items-end justify-center">
+                <div className="flex justify-center gap-3">
                   {playerCards.map((card, index) => (
-                    <Card 
-                      key={index} 
-                      card={card} 
-                      isRevealed={!isBlind || gameState === 'showdown' || winner !== null}
-                      isPlayerCard={true}
-                    />
+                    <motion.div
+                      key={index}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.1, duration: 0.3 }}
+                    >
+                      <Card 
+                        key={index} 
+                        card={card} 
+                        isRevealed={!isBlind || gameState === 'showdown' || winner !== null}
+                        isPlayerCard={true}
+                      />
+                    </motion.div>
                   ))}
                 </div>
               </div>
               
-              <div className="mt-1 text-sm font-medium text-white shadow-text">You</div>
-              <div className="text-sm text-white/80 shadow-text">₹{playerChips}</div>
+              <div className="bg-black/40 backdrop-blur-sm text-white font-medium px-4 py-1 rounded-full inline-block mt-4 shadow-md">
+                ₹{playerChips}
+              </div>
+              <div className="text-white font-semibold text-shadow mt-1 mb-2">You</div>
               
-              <div className="flex justify-center mt-1">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-md">
-                  <User size={20} className="text-white" />
+              <div className="flex justify-center">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-dark border-2 border-primary-dark/50 flex items-center justify-center shadow-lg">
+                  <User size={24} className="text-white" />
                 </div>
               </div>
             </div>
           </div>
           
           {/* Game controls */}
-          <div className="bg-surface-100 dark:bg-surface-800 rounded-xl p-6 shadow-lg">
-            <div className="flex flex-wrap justify-between gap-4">
+          <div className="bg-surface-100 dark:bg-surface-800 rounded-xl p-6 shadow-lg border border-surface-200 dark:border-surface-700">
+            <div className="flex flex-col sm:flex-row justify-between gap-6">
               <div className="flex items-center">
                 <button
                   onClick={toggleBlind}
-                  className={`flex items-center px-4 py-2 rounded-lg ${
+                  className={`flex items-center px-5 py-2.5 rounded-lg font-medium shadow-md transition-colors ${
                     isBlind 
-                      ? 'bg-surface-200 dark:bg-surface-700 text-surface-600 dark:text-surface-300' 
-                      : 'bg-primary text-white'
+                      ? 'bg-surface-200 dark:bg-surface-700 text-surface-700 dark:text-surface-300 hover:bg-surface-300 dark:hover:bg-surface-600' 
+                      : 'bg-gradient-to-r from-primary to-primary-dark text-white'
                   }`}
                   disabled={gameState !== 'betting'}
                 >
                   {isBlind ? (
                     <>
-                      <EyeOff size={16} className="mr-2" />
-                      Blind
+                      <EyeOff size={18} className="mr-2" />
+                      Playing Blind
                     </>
                   ) : (
                     <>
-                      <Eye size={16} className="mr-2" />
-                      Seen
+                      <Eye size={18} className="mr-2" />
+                      Playing Seen
                     </>
                   )}
                 </button>
               </div>
               
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 justify-end">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => handleBet('fold')}
-                  className="px-4 py-2 bg-surface-200 dark:bg-surface-700 hover:bg-surface-300 dark:hover:bg-surface-600 rounded-lg flex items-center"
+                  className="px-4 py-2.5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-800/30 rounded-lg flex items-center font-medium shadow transition-colors"
                   disabled={gameState !== 'betting'}
                 >
-                  <X size={16} className="mr-2 text-red-500" />
+                  <X size={18} className="mr-2" />
                   Fold
                 </motion.button>
                 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => handleBet('call')}
-                  className="px-4 py-2 bg-surface-200 dark:bg-surface-700 hover:bg-surface-300 dark:hover:bg-surface-600 rounded-lg flex items-center"
+                  className="px-4 py-2.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800/30 rounded-lg flex items-center font-medium shadow transition-colors"
                   disabled={gameState !== 'betting' || playerChips < (isBlind ? currentBet/2 : currentBet)}
                 >
-                  <Check size={16} className="mr-2 text-primary" />
+                  <Check size={18} className="mr-2" />
                   Call ₹{isBlind ? currentBet/2 : currentBet}
                 </motion.button>
                 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => handleBet('raise')}
-                  className="px-4 py-2 bg-primary hover:bg-primary/90 rounded-lg text-white flex items-center"
+                  className="px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white rounded-lg flex items-center font-medium shadow-md transition-all"
                   disabled={gameState !== 'betting' || playerChips < (isBlind ? currentBet : currentBet*2)}
                 >
-                  <Plus size={16} className="mr-2" />
+                  <Plus size={18} className="mr-2" />
                   Raise to ₹{isBlind ? currentBet : currentBet*2}
                 </motion.button>
                 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => handleBet('show')}
-                  className="px-4 py-2 bg-secondary hover:bg-secondary/90 rounded-lg text-white flex items-center"
+                  className="px-4 py-2.5 bg-gradient-to-r from-secondary to-secondary-dark hover:from-secondary-dark hover:to-secondary text-white rounded-lg flex items-center font-medium shadow-md transition-all"
                   disabled={gameState !== 'betting'}
                 >
-                  <Eye size={16} className="mr-2" />
+                  <Eye size={18} className="mr-2" />
                   Show
                 </motion.button>
               </div>
