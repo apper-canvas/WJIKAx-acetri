@@ -66,37 +66,48 @@ const Card = ({ card, isRevealed = false, isPlayerCard = false }) => {
       }}
     >
       <div 
-        className={`card-face ${getCardColor(card.suit)}`}
+        className={`absolute inset-0 bg-white border-2 border-gray-200 rounded-lg shadow-md ${getCardColor(card.suit)}`}
         style={{ 
           transform: 'rotateY(0deg)',
+          backfaceVisibility: 'hidden',
           zIndex: isRevealed ? 2 : 0
         }}
       >
         <div className="absolute inset-0 flex flex-col justify-between p-2">
           <div className="flex justify-between items-center">
-            <div>{card.value}</div>
-            <div>{getSuitSymbol(card.suit)}</div>
+            <div className="font-bold">{card.value}</div>
+            <div className="text-lg">{getSuitSymbol(card.suit)}</div>
           </div>
-          <div className="flex justify-center items-center text-3xl">
+          <div className="flex justify-center items-center text-3xl font-bold">
             {getSuitSymbol(card.suit)}
           </div>
           <div className="flex justify-between items-center rotate-180">
-            <div>{card.value}</div>
-            <div>{getSuitSymbol(card.suit)}</div>
+            <div className="font-bold">{card.value}</div>
+            <div className="text-lg">{getSuitSymbol(card.suit)}</div>
           </div>
         </div>
       </div>
       
       <div 
-        className="card-back"
+        className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 border-2 border-gray-200 rounded-lg shadow-md"
         style={{ 
           transform: 'rotateY(180deg)',
+          backfaceVisibility: 'hidden',
           zIndex: isRevealed ? 0 : 2
         }}
       >
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
             <span className="text-2xl font-bold text-white">A♠</span>
+          </div>
+        </div>
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="h-full w-full opacity-10">
+            <div className="grid grid-cols-5 grid-rows-7 h-full">
+              {[...Array(35)].map((_, i) => (
+                <div key={i} className="border border-white/20" />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -310,7 +321,7 @@ const MainFeature = ({ gameMode }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={startNewGame}
-            className="btn-primary w-full"
+            className="px-4 py-2 bg-primary text-white rounded-lg w-full"
           >
             Start Game
           </motion.button>
@@ -320,18 +331,27 @@ const MainFeature = ({ gameMode }) => {
       {/* Game table */}
       {playerCards.length > 0 && (
         <div className="relative">
-          <div className="game-table mb-8">
+          <div className="w-full h-96 bg-gradient-to-b from-green-800 to-green-900 rounded-xl mb-8 relative overflow-hidden shadow-xl">
+            {/* Table pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="grid grid-cols-12 grid-rows-8 h-full">
+                {[...Array(96)].map((_, i) => (
+                  <div key={i} className="border border-white/10" />
+                ))}
+              </div>
+            </div>
+            
             {/* Opponent */}
             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center z-10">
               <div className="flex justify-center mb-2">
-                <div className="w-12 h-12 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center shadow-md">
                   <User size={20} className="text-surface-500 dark:text-surface-400" />
                 </div>
               </div>
-              <div className="text-sm font-medium">Opponent</div>
-              <div className="text-sm text-surface-500 dark:text-surface-400 mb-1">₹{opponentChips}</div>
+              <div className="text-sm font-medium text-white shadow-text">Opponent</div>
+              <div className="text-sm text-white/80 mb-1 shadow-text">₹{opponentChips}</div>
               
-              <div className="mt-2 flex justify-center space-x-2">
+              <div className="mt-4 flex justify-center space-x-3">
                 {opponentCards.map((card, index) => (
                   <Card 
                     key={index} 
@@ -352,7 +372,7 @@ const MainFeature = ({ gameMode }) => {
                   repeatType: "reverse", 
                   duration: 1.5 
                 }}
-                className="text-xl font-bold mb-2"
+                className="text-2xl font-bold mb-2 text-white shadow-text bg-black/30 px-6 py-2 rounded-full"
               >
                 Pot: ₹{pot}
               </motion.div>
@@ -361,7 +381,7 @@ const MainFeature = ({ gameMode }) => {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-surface-800/80 text-white px-4 py-2 rounded-lg text-sm"
+                  className="bg-black/60 text-white px-4 py-2 rounded-lg text-sm mt-2 backdrop-blur-sm shadow-lg"
                 >
                   {message}
                 </motion.div>
@@ -382,7 +402,7 @@ const MainFeature = ({ gameMode }) => {
             
             {/* Player */}
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center z-20">
-              <div className="mb-4 flex justify-center space-x-2">
+              <div className="mb-4 flex justify-center space-x-3">
                 {playerCards.map((card, index) => (
                   <Card 
                     key={index} 
@@ -393,19 +413,19 @@ const MainFeature = ({ gameMode }) => {
                 ))}
               </div>
               
-              <div className="mt-2 text-sm font-medium">You</div>
-              <div className="text-sm text-surface-500 dark:text-surface-400">₹{playerChips}</div>
+              <div className="mt-2 text-sm font-medium text-white shadow-text">You</div>
+              <div className="text-sm text-white/80 shadow-text">₹{playerChips}</div>
               
               <div className="flex justify-center mt-1">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <User size={20} className="text-primary" />
+                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-md">
+                  <User size={20} className="text-white" />
                 </div>
               </div>
             </div>
           </div>
           
           {/* Game controls */}
-          <div className="bg-surface-100 dark:bg-surface-800 rounded-xl p-6">
+          <div className="bg-surface-100 dark:bg-surface-800 rounded-xl p-6 shadow-lg">
             <div className="flex flex-wrap justify-between gap-4">
               <div className="flex items-center">
                 <button
@@ -458,7 +478,7 @@ const MainFeature = ({ gameMode }) => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleBet('raise')}
-                  className="px-4 py-2 bg-primary hover:bg-primary-dark rounded-lg text-white flex items-center"
+                  className="px-4 py-2 bg-primary hover:bg-primary/90 rounded-lg text-white flex items-center"
                   disabled={gameState !== 'betting' || playerChips < (isBlind ? currentBet : currentBet*2)}
                 >
                   <Plus size={16} className="mr-2" />
@@ -469,7 +489,7 @@ const MainFeature = ({ gameMode }) => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleBet('show')}
-                  className="px-4 py-2 bg-secondary hover:bg-secondary-dark rounded-lg text-white flex items-center"
+                  className="px-4 py-2 bg-secondary hover:bg-secondary/90 rounded-lg text-white flex items-center"
                   disabled={gameState !== 'betting'}
                 >
                   <Eye size={16} className="mr-2" />
