@@ -60,8 +60,18 @@ const Card = ({ card, isRevealed = false, isPlayerCard = false }) => {
       animate={{ rotateY: isRevealed ? 0 : 180 }}
       transition={{ duration: 0.6 }}
       className="relative w-24 h-36 perspective-1000"
+      style={{ 
+        transformStyle: 'preserve-3d',
+        zIndex: isPlayerCard ? 10 : 5
+      }}
     >
-      <div className={`card-face ${getCardColor(card.suit)}`}>
+      <div 
+        className={`card-face ${getCardColor(card.suit)}`}
+        style={{ 
+          transform: 'rotateY(0deg)',
+          zIndex: isRevealed ? 2 : 0
+        }}
+      >
         <div className="absolute inset-0 flex flex-col justify-between p-2">
           <div className="flex justify-between items-center">
             <div>{card.value}</div>
@@ -77,7 +87,13 @@ const Card = ({ card, isRevealed = false, isPlayerCard = false }) => {
         </div>
       </div>
       
-      <div className="card-back">
+      <div 
+        className="card-back"
+        style={{ 
+          transform: 'rotateY(180deg)',
+          zIndex: isRevealed ? 0 : 2
+        }}
+      >
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
             <span className="text-2xl font-bold text-white">A♠</span>
@@ -306,14 +322,14 @@ const MainFeature = ({ gameMode }) => {
         <div className="relative">
           <div className="game-table mb-8">
             {/* Opponent */}
-            <div className="absolute top-6 left-1/2 transform -translate-x-1/2 text-center">
+            <div className="absolute top-6 left-1/2 transform -translate-x-1/2 text-center z-10">
               <div className="flex justify-center mb-2">
                 <div className="w-12 h-12 rounded-full bg-surface-200 dark:bg-surface-700 flex items-center justify-center">
                   <User size={20} className="text-surface-500 dark:text-surface-400" />
                 </div>
               </div>
               <div className="text-sm font-medium">Opponent</div>
-              <div className="text-sm text-surface-500 dark:text-surface-400">₹{opponentChips}</div>
+              <div className="text-sm text-surface-500 dark:text-surface-400 mb-4">₹{opponentChips}</div>
               
               <div className="mt-4 flex justify-center space-x-2">
                 {opponentCards.map((card, index) => (
@@ -327,7 +343,7 @@ const MainFeature = ({ gameMode }) => {
             </div>
             
             {/* Pot */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-20">
               <motion.div 
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
@@ -365,8 +381,8 @@ const MainFeature = ({ gameMode }) => {
             </div>
             
             {/* Player */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center">
-              <div className="mb-4 flex justify-center space-x-2">
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center z-10">
+              <div className="mb-8 flex justify-center space-x-2">
                 {playerCards.map((card, index) => (
                   <Card 
                     key={index} 
@@ -377,7 +393,7 @@ const MainFeature = ({ gameMode }) => {
                 ))}
               </div>
               
-              <div className="text-sm font-medium">You</div>
+              <div className="mt-4 text-sm font-medium">You</div>
               <div className="text-sm text-surface-500 dark:text-surface-400">₹{playerChips}</div>
               
               <div className="flex justify-center mt-2">

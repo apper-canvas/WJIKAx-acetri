@@ -10,15 +10,17 @@
 
 @layer components {
   .card-face {
-    @apply relative w-full h-full rounded-xl bg-white shadow-card transform transition-transform duration-500 ease-in-out;
+    @apply absolute inset-0 w-full h-full rounded-xl bg-white shadow-card transition-transform duration-500 ease-in-out;
     transform-style: preserve-3d;
     backface-visibility: hidden;
+    z-index: 1;
   }
   
   .card-back {
     @apply absolute inset-0 rounded-xl bg-gradient-to-br from-secondary to-primary-dark;
     transform: rotateY(180deg);
     backface-visibility: hidden;
+    z-index: 0;
   }
   
   .btn-primary {
